@@ -30,6 +30,22 @@
 
 /* Template default CSS
 /*----------------------------------------*/
+.instagram-btn {
+    background-color: #E1306C; /* Instagram pink */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.instagram-btn:hover {
+    background-color: #C13584; /* Darker Instagram pink on hover */
+}
 
 html,
 body {
