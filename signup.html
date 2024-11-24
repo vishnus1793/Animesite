@@ -97,21 +97,21 @@
                 <div class="col-lg-6">
                     <div class="login__form">
                         <h3>Sign Up</h3>
-                        <form action="#">
+                        <form id="signup-form">
                             <div class="input__item">
-                                <input type="text" placeholder="Username" required>
+                                <input type="text" id="username" placeholder="Username" required>
                                 <span class="icon_profile"></span>
                             </div>
                             <div class="input__item">
-                                <input type="email" placeholder="Email address" required>
+                                <input type="email" id="email" placeholder="Email address" required>
                                 <span class="icon_mail"></span>
                             </div>
                             <div class="input__item">
-                                <input type="password" placeholder="Password" required>
+                                <input type="password" id="password" placeholder="Password" required>
                                 <span class="icon_lock"></span>
                             </div>
                             <div class="input__item">
-                                <input type="password" placeholder="Confirm Password" required>
+                                <input type="password" id="confirm-password" placeholder="Confirm Password" required>
                                 <span class="icon_lock"></span>
                             </div>
                             <button type="submit" class="site-btn">Register Now</button>
@@ -120,7 +120,7 @@
                 </div>
                 <div class="col-lg-6">
                     <div class="login__register">
-                        <h3>Dont’t Have An Account?</h3>
+                        <h3>Already Have An Account?</h3>
                         <a href="./login.html" class="primary-btn">Login Here</a>
                     </div>
                 </div>
@@ -140,8 +140,60 @@
                         </div>
                     </div>
                 </div>
+            </div>
         </div>
     </section>
+    <!-- Sign-Up Section End -->
+    
+    <script type="module">
+        import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+    
+        // Initialize Supabase client
+        const supabaseUrl = 'https://hskrvrifbkzodsodsfjb.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhza3J2cmlmYmt6b2Rzb2RzZmpiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mjc0OTkzODEsImV4cCI6MjA0MzA3NTM4MX0.2W6G-VYA2msQkbwhN1GHh-39R5KynXGvBfjLqkuf8EE'; // Replace with your Supabase key
+        const supabase = createClient(supabaseUrl, supabaseKey);
+    
+        // Handle form submission
+        const signupForm = document.getElementById('signup-form');
+        signupForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+    
+            // Get form values
+            const username = document.getElementById('username').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+    
+            // Validate password and confirmation
+            if (password !== confirmPassword) {
+                alert('Passwords do not match!');
+                return;
+            }
+    
+            try {
+                // Sign up the user
+                const { data, error } = await supabase.auth.signUp({
+                    email: email,
+                    password: password,
+                    options: {
+                        data: {
+                            username: username, // Save username in Supabase metadata
+                        },
+                    },
+                });
+    
+                if (error) {
+                    alert('Error signing up: ' + error.message);
+                } else {
+                    alert('Sign-up successful! Please check your email to confirm your account.');
+                    window.location.href = './login.html'; // Redirect to login page
+                }
+            } catch (err) {
+                console.error('Unexpected error:', err);
+                alert('Something went wrong. Please try again later.');
+            }
+        });
+    </script>
     <!-- Signup Section End -->
 
     <!-- Footer Section Begin -->
