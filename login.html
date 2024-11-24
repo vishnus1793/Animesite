@@ -58,7 +58,7 @@
                                     </ul>
                                 </li>
                                 <li><a href="./Update.html">Our Blog</a></li>
-                                <li><a href="#">Contacts</a></li>
+                                <li><a href="#">Streak</a></li>
                             </ul>
                         </nav>
                     </div>
@@ -97,13 +97,13 @@
                 <div class="col-lg-6">
                     <div class="login__form">
                         <h3>Login</h3>
-                        <form action="#">
+                        <form id="login-form">
                             <div class="input__item">
-                                <input type="text" placeholder="Email address">
+                                <input type="email" id="email" placeholder="Email address" required>
                                 <span class="icon_mail"></span>
                             </div>
                             <div class="input__item">
-                                <input type="text" placeholder="Password">
+                                <input type="password" id="password" placeholder="Password" required>
                                 <span class="icon_lock"></span>
                             </div>
                             <button type="submit" class="site-btn">Login Now</button>
@@ -114,7 +114,7 @@
                 <div class="col-lg-6">
                     <div class="login__register">
                         <h3>Dont’t Have An Account?</h3>
-                        <a href="#" class="primary-btn">Register Now</a>
+                        <a href="./signup.html" class="primary-btn">Register Now</a>
                     </div>
                 </div>
             </div>
@@ -137,6 +137,7 @@
         </div>
     </section>
     <!-- Login Section End -->
+    
 
     <!-- Footer Section Begin -->
     <footer class="footer">
@@ -156,7 +157,7 @@
                             <li class="active"><a href="./index.html">Homepage</a></li>
                             <li><a href="./categories.html">Categories</a></li>
                             <li><a href="./Update.html">Our Blog</a></li>
-                            <li><a href="#">Contacts</a></li>
+                            <li><a href="#">Streak</a></li>
                         </ul>
                     </div>
                 </div>
@@ -188,6 +189,42 @@
     <script src="js/main.js"></script>
 
 
-</body>
 
+<script type="module">
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+
+    // Initialize Supabase client
+    const supabaseUrl = 'https://hskrvrifbkzodsodsfjb.supabase.co';
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhza3J2cmlmYmt6b2Rzb2RzZmpiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mjc0OTkzODEsImV4cCI6MjA0MzA3NTM4MX0.2W6G-VYA2msQkbwhN1GHh-39R5KynXGvBfjLqkuf8EE'; // Replace with your Supabase key
+    const supabase = createClient(supabaseUrl, supabaseKey);
+
+    // Handle form submission
+    const loginForm = document.getElementById('login-form');
+    loginForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+
+        // Get email and password values
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+
+        try {
+            // Call Supabase signInWithPassword
+            const { data, error } = await supabase.auth.signInWithPassword({
+                email: email,
+                password: password,
+            });
+
+            if (error) {
+                alert('Error logging in: ' + error.message);
+            } else {
+                alert('Login successful!');
+                window.location.href = './index.html'; // Redirect to homepage
+            }
+        } catch (err) {
+            console.error('Unexpected error:', err);
+            alert('Something went wrong. Please try again later.');
+        }
+    });
+</script>
+</body>
 </html>

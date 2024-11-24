@@ -25,6 +25,51 @@
 9.  Contact
 10.  Footer Style
 -------------------------------------------------------------------*/
+.signup__register {
+    padding-left: 30px;
+}
+
+.signup__register h3 {
+    color: #ffffff;
+    font-weight: 700;
+    font-family: "Oswald", sans-serif;
+    margin-bottom: 30px;
+}
+
+.signup__register .primary-btn {
+    background: #e53637;
+    padding: 12px 42px;
+    display: inline-block;
+    color: #ffffff;
+    font-weight: 600;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: none;
+    border-radius: 3px;
+    transition: background 0.3s;
+}
+
+.signup__register .primary-btn:hover {
+    background: #c12d2d;
+}
+
+.signup__register p {
+    font-size: 14px;
+    color: #ffffff;
+    margin-top: 15px;
+    line-height: 1.5;
+}
+
+.signup__register a {
+    color: #e53637;
+    font-weight: 700;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.signup__register a:hover {
+    color: #c12d2d;
+}
 
 /*----------------------------------------*/
 
@@ -1942,11 +1987,11 @@ ol {
 	margin: 0;
 	text-align: center;
 }
+-------*/
 
 /*---------------------
   Footer
------------------------*/
-
+----------------
 .footer {
 	background: #070720;
 	padding-top: 60px;
