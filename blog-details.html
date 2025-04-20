@@ -94,85 +94,21 @@
                         <img src="img/blog/details/blog-details-pic.jpg" alt="">
                     </div>
                 </div>
-                <div class="col-lg-8">
-                    <div class="blog__details__content">
-                        <div class="blog__details__text">
-                            <p>As a result the last couple of eps haven’t been super exciting for me, because they’ve
-                                been more like settling into a familiar and comfortable routine.  We’re seeing character
-                                growth here but it’s subtle (apart from Shouyou, arguably).  I mean, Tobio being an
-                                asshole is nothing new – it’s kind of the foundation of his entire character arc. 
-                                Confronting whether his being an asshole is a problem for the Crows this directly is a
-                                bit of an evolution, and probably an overdue one at that, but the overall dynamic with
-                            Kageyama is basically unchanged.</p>
-                        </div>
-                        <div class="blog__details__item__text">
-                            <h4>Tobio-Nishinoya showdown:</h4>
-                            <img src="img/blog/details/bd-item-1.jpg" alt="">
-                            <p>In Japan the idea of a first-year speaking to a senior the way Kageyama did to Asahi is a
-                                lot more shocking than it would be in the West, but Tobio calling out teammates in
-                                genuinely rude fashion in the middle of a match is what got him isolated in the first
-                                place.  It’s better for the Crows to sort this out in practice matches than the real
-                                deal, but this is really on Tobio – he has to figure out how to co-exist with others in
-                            a team environment.</p>
-                        </div>
-                        <div class="blog__details__item__text">
-                            <h4>Nanatsu no Taizai: Kamigami No Gekirin</h4>
-                            <img src="img/blog/details/bd-item-2.jpg" alt="">
-                            <p>In Japan the idea of a first-year speaking to a senior the way Kageyama did to Asahi is a
-                                lot more shocking than it would be in the West, but Tobio calling out teammates in
-                                genuinely rude fashion in the middle of a match is what got him isolated in the first
-                                place.  It’s better for the Crows to sort this out in practice matches than the real
-                                deal, but this is really on Tobio – he has to figure out how to co-exist with others in
-                            a team environment.</p>
-                        </div>
-                        <div class="blog__details__item__text">
-                            <h4>ID:Ianvaded:</h4>
-                            <img src="img/blog/details/bd-item-3.jpg" alt="">
-                            <p>In Japan the idea of a first-year speaking to a senior the way Kageyama did to Asahi is a
-                                lot more shocking than it would be in the West, but Tobio calling out teammates in
-                                genuinely rude fashion in the middle of a match is what got him isolated in the first
-                                place.  It’s better for the Crows to sort this out in practice matches than the real
-                                deal, but this is really on Tobio – he has to figure out how to co-exist with others in
-                            a team environment.</p>
-                        </div>
-                        <div class="blog__details__tags">
-                            <a href="#">Healthfood</a>
-                            <a href="#">Sport</a>
-                            <a href="#">Game</a>
-                        </div>
-                        
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- Blog Details Section End -->
-
-        <!-- Footer Section Begin -->
-        <footer class="footer">
-            <div class="page-up">
-                <a href="#" id="scrollToTopButton"><span class="arrow_carrot-up"></span></a>
-            </div>
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-3">
-                        <div class="footer__logo">
-                            <a href="./index.html"><img src="img/logo.png" alt=""></a>
+                <section class="blog-details spad">
+                    <div class="container">
+                        <div class="row d-flex justify-content-center">
+                            <div class="col-lg-8">
+                                <div class="blog__details__title">
+                                    <h6>Latest Anime News</h6>
+                                    <div id="anime-news"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-lg-6">
-                        <div class="footer__nav">
-                            <ul>
-                                <li class="active"><a href="./index.html">Homepage</a></li>
-                                <li><a href="./categories.html">Categories</a></li>
-                                <li><a href="./Update.html">Updates</a></li>
-                                <!-- <li><a href="#">Streak</a></li> -->
-                            </ul>
-                        </div>
-                    </div>
-                  
-                  </div>
-              </div>
-          </footer>
+                </section>
+                
+                
+      
           <!-- Footer Section End -->
 
           <!-- Search model Begin -->
@@ -185,7 +121,39 @@
             </div>
         </div>
         <!-- Search model end -->
-
+        <script>
+            async function fetchAnimeNews() {
+                const container = document.getElementById('anime-news');
+                try {
+                    const response = await fetch('https://api.jikan.moe/v4/anime?q=&order_by=start_date&sort=desc&limit=5');
+                    const data = await response.json();
+        
+                    if (data.data && data.data.length > 0) {
+                        data.data.forEach(anime => {
+                            const animeCard = document.createElement('div');
+                            animeCard.className = 'blog__details__item__text';
+                            animeCard.innerHTML = `
+                                <h4>${anime.title}</h4>
+                                <img src="${anime.images.jpg.image_url}" alt="${anime.title}" style="max-width:100%;height:auto;border-radius:10px;">
+                                <p><strong>Type:</strong> ${anime.type} | <strong>Episodes:</strong> ${anime.episodes || 'N/A'} | <strong>Status:</strong> ${anime.status}</p>
+                                <p>${anime.synopsis ? anime.synopsis.slice(0, 200) + '...' : ''}</p>
+                                <a href="${anime.url}" target="_blank">Read More</a>
+                                <hr>
+                            `;
+                            container.appendChild(animeCard);
+                        });
+                    } else {
+                        container.innerHTML = '<p>No news found at the moment.</p>';
+                    }
+                } catch (error) {
+                    container.innerHTML = '<p>Error fetching anime news. Please try again later.</p>';
+                    console.error(error);
+                }
+            }
+        
+            fetchAnimeNews();
+        </script>
+        
         <!-- Js Plugins -->
         <script src="js/jquery-3.3.1.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
